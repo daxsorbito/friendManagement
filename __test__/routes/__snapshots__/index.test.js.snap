@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`routes test POST# /friends should fail if content type is not json 1`] = `
+Object {
+  "code": "InvalidContent",
+  "message": "Expects 'application/json'",
+}
+`;
+
+exports[`routes test POST# /friends should fail if only one email is supplied in the payload 1`] = `
+Object {
+  "code": "BadRequest",
+  "message": "Unexpected error.; caused by Error: Insufficient number of email addresses supplied.",
+}
+`;
+
+exports[`routes test POST# /friends should fail if payload is not array 1`] = `
+Object {
+  "code": "BadRequest",
+  "message": "Unexpected error.; caused by Error: Invalid friends payload.",
+}
+`;
+
+exports[`routes test POST# /friends should pass if correct data is passed 1`] = `
+Object {
+  "success": true,
+}
+`;

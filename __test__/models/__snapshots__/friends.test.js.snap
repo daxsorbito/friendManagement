@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Friends model test addFriends# method tests should be able to add and connect friends 1`] = `
+Array [
+  Object {
+    "blocked": Array [],
+    "friends": Array [
+      "test2@test.com",
+      "test3@test.com",
+    ],
+    "subscribers": Array [],
+    "userEmail": "test1@test.com",
+  },
+  Object {
+    "blocked": Array [],
+    "friends": Array [
+      "test1@test.com",
+      "test3@test.com",
+      "test_doestnot_exist@test.com",
+    ],
+    "subscribers": Array [],
+    "userEmail": "test2@test.com",
+  },
+  Object {
+    "blocked": Array [],
+    "friends": Array [
+      "test1@test.com",
+      "test2@test.com",
+    ],
+    "subscribers": Array [],
+    "userEmail": "test3@test.com",
+  },
+]
+`;
