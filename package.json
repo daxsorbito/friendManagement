@@ -1,0 +1,35 @@
+{
+    "name": "friendmanagement",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/daxsorbito/friendManagement.git"
+    },
+    "author": "Dax A. Sorbito",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/daxsorbito/friendManagement/issues"
+    },
+    "homepage": "https://github.com/daxsorbito/friendManagement#readme",
+    "scripts": {
+        "start": "babel-node index.js",
+        "test": "jest"
+    },
+    "devDependencies": {
+        "babel-cli": "^6.26.0",
+        "babel-jest": "^22.4.1",
+        "babel-plugin-transform-object-rest-spread": "^6.26.0",
+        "babel-preset-env": "^1.6.1"
+    },
+    "dependencies": {
+        "mongoose": "^5.0.6",
+        "mongoose-timestamp": "^0.6.0",
+        "nodemon": "^1.15.1",
+        "restify": "^6.3.4",
+        "restify-await-promise": "^1.0.2",
+        "restify-errors": "^6.0.0",
+        "validator": "^9.4.1"
+    }
+}
