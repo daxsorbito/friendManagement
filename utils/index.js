@@ -32,6 +32,11 @@ const isEmailValid = (emails) => {
     return true;
 }
 
+const throwNotFoundError = (field) => {
+    throw new error
+        .ResourceNotFoundError(`Resource not found.${field ? ' --' + field : ''}`);
+}
+
 const restifyErrorWrapper = (res, e) => {
     if (e instanceof error.RestError) {
         res.send(e);
@@ -42,16 +47,15 @@ const restifyErrorWrapper = (res, e) => {
     }
 }
 
-const throwNotFoundError = (field) => {
-    throw new error
-        .ResourceNotFoundError(`Resource not found.${field ? ' --' + field : ''}`);
-}
+const extractEmailMentions = (msg) =>
+    msg.match(/([\w\._-]+@[\w\._-]+\.[\w\._-]+)/gi);
+
 
 module.exports = {
     validateEmails,
     validateEmail,
     isEmailValid,
+    throwNotFoundError,
     restifyErrorWrapper,
-    throwNotFoundError
-
+    extractEmailMentions
 }

@@ -73,4 +73,19 @@ module.exports = (server) => {
         }
         next();
     });
+    server.post('/friends/post', async(req, res, next) => {
+        try {
+            if (!req.is('application/json')) {
+                res.send(new error.InvalidContentError({}, `Expects 'application/json'`));
+                return next();
+            }
+            const sender = _.get(req, ['body', 'sender'], '');
+            const text = _.get(req, ['body', 'text'], '');
+            const result = await Friends.getListOfFriendsToBeNotified(sender, text);
+            res.send({ success: true, recipients: result })
+        } catch (e) {
+            utils.restifyErrorWrapper(res, e);
+        }
+        next();
+    });
 }

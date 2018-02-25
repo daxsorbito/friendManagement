@@ -156,5 +156,51 @@ describe('routes test', () => {
         });
     });
 
+    describe('POST# /friends/post', () => {
+        it('should friend connection list properly', async() => {
+            // add users that are friends
+            await request(server)
+                .post('/friends').send({ friends: ['test1@test.com', 'test2@test.com', 'test3@test.com'] });
 
+            // test post
+            let result = await request(server)
+                .post('/friends/post')
+                .send({ sender: 'test1@test.com' })
+            expect(result.body).toMatchSnapshot();
+
+            // block test2
+            await request(server)
+                .post('/friends/block')
+                .send({ requestor: 'test1@test.com', target: 'test2@test.com' });
+
+            result = await request(server)
+                .post('/friends/post')
+                .send({ sender: 'test1@test.com' });
+            expect(result.body).toMatchSnapshot();
+
+            // add user not connected to test1
+            const notConnectedUser = 'test_not_connected@test.com';
+            await request(server)
+                .post('/friends').send({ friends: [notConnectedUser, 'another_not_connected@test.com'] });
+
+            // mention the new user in the post
+            result = await request(server)
+                .post('/friends/post')
+                .send({ sender: 'test1@test.com', text: `Hello World! ${notConnectedUser}` });
+
+            expect(result.body).toMatchSnapshot();
+
+            // block the mentioned user
+            await request(server)
+                .post('/friends/block')
+                .send({ requestor: 'test1@test.com', target: notConnectedUser });
+
+            // mention again the not connected user
+            result = await request(server)
+                .post('/friends/post')
+                .send({ sender: 'test1@test.com', text: `Hello World! ${notConnectedUser}` });
+
+            expect(result.body).toMatchSnapshot();
+        });
+    });
 });

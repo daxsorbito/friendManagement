@@ -209,5 +209,68 @@ describe('Friends model test', () => {
         });
     });
 
+    describe('getListOfFriendsToBeNotified# method tests', () => {
+        describe('user not blocked', () => {
+            it('should a able to return list with friend connections', async() => {
+                expect.assertions(1);
+                await Friends.add('test1@test.com', { friends: ['connectedFriend@test.com'] });
 
+                const result = await Friends.getListOfFriendsToBeNotified('test1@test.com');
+
+                expect(result).toEqual(['connectedfriend@test.com']);
+            });
+
+            it('should a able to return list with subscriber', async() => {
+                expect.assertions(1);
+                await Friends.add('test1@test.com', { subscribers: ['subscriberFriend@test.com'] });
+
+                const result = await Friends.getListOfFriendsToBeNotified('test1@test.com');
+
+                expect(result).toEqual(['subscriberfriend@test.com']);
+            });
+
+            it('should a able to return list with mentioned', async() => {
+                expect.assertions(1);
+                const msg = 'Hello World! mentioned_user@test.com';
+                await Friends.add('test1@test.com');
+
+                const result = await Friends.getListOfFriendsToBeNotified('test1@test.com', msg);
+
+                expect(result).toEqual(['mentioned_user@test.com']);
+            });
+        });
+
+        describe('blocked user', () => {
+            it('should a able to return list with friend connections', async() => {
+                expect.assertions(1);
+                const testEmail = 'connected_friend@test.com';
+                await Friends.add('test1@test.com', { blocked: [testEmail], friends: [testEmail] });
+
+                const result = await Friends.getListOfFriendsToBeNotified('test1@test.com');
+
+                expect(result).toEqual([]);
+            });
+
+            it('should a able to return list with subscriber', async() => {
+                expect.assertions(1);
+                const testEmail = 'subscriber_friend@test.com';
+                await Friends.add('test1@test.com', { blocked: [testEmail], subscribers: [testEmail] });
+
+                const result = await Friends.getListOfFriendsToBeNotified('test1@test.com');
+
+                expect(result).toEqual([]);
+            });
+
+            it('should a able to return list with mentioned', async() => {
+                expect.assertions(1);
+                const testEmail = 'mentioned_user@test.com';
+                const msg = `Hello World! ${testEmail}`;
+                await Friends.add('test1@test.com', { blocked: [testEmail] });
+
+                const result = await Friends.getListOfFriendsToBeNotified('test1@test.com', msg);
+
+                expect(result).toEqual([]);
+            });
+        });
+    });
 })

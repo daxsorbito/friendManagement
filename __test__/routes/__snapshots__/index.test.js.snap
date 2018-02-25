@@ -89,6 +89,44 @@ Object {
 }
 `;
 
+exports[`routes test POST# /friends/post should friend connection list properly 1`] = `
+Object {
+  "recipients": Array [
+    "test2@test.com",
+    "test3@test.com",
+  ],
+  "success": true,
+}
+`;
+
+exports[`routes test POST# /friends/post should friend connection list properly 2`] = `
+Object {
+  "recipients": Array [
+    "test3@test.com",
+  ],
+  "success": true,
+}
+`;
+
+exports[`routes test POST# /friends/post should friend connection list properly 3`] = `
+Object {
+  "recipients": Array [
+    "test_not_connected@test.com",
+    "test3@test.com",
+  ],
+  "success": true,
+}
+`;
+
+exports[`routes test POST# /friends/post should friend connection list properly 4`] = `
+Object {
+  "recipients": Array [
+    "test3@test.com",
+  ],
+  "success": true,
+}
+`;
+
 exports[`routes test POST# /friends/subscribe should not pass if requestor is not found 1`] = `
 Object {
   "code": "ResourceNotFound",

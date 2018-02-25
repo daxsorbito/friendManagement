@@ -89,11 +89,34 @@ const block = async(requestor, target) => {
     return result;
 }
 
+const getListOfFriendsToBeNotified = async(email, msg) => {
+    helper.validateEmail(email);
+    console.log('params>>>', email, msg);
+    const mentions = helper.extractEmailMentions(msg || '') || [];
+    console.log('mentions>>>', mentions);
+    const requestorData = await Friends.findOne({ userEmail: email }, { userEmail: 1, subscribers: 1, friends: 1, blocked: 1 });
+
+    const blocked = _.get(requestorData, 'blocked', []);
+    const tentativeRecipients = _.uniq([
+        ...mentions,
+        ..._.get(requestorData, 'friends', []),
+        ..._.get(requestorData, 'subscribers', []),
+    ]);
+
+    const result = tentativeRecipients.filter(i => blocked.indexOf(i) === -1);
+
+    console.log('>>>>>', tentativeRecipients, blocked, mentions, requestorData, result);
+    return result;
+
+
+}
+
 module.exports = {
     add,
     addFriends,
     getAllFriends,
     getCommonFriends,
     subscribe,
-    block
+    block,
+    getListOfFriendsToBeNotified
 }
