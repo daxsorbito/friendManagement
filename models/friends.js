@@ -46,11 +46,54 @@ const getCommonFriends = async(emails) => {
     return _.intersection(...results.map(i => _.get(i, 'friends', [])));
 }
 
+const subscribe = async(requestor, target) => {
+    const combinedEmails = [requestor, target];
+    helper.validateEmails(combinedEmails);
+    const allUsers = await Friends.find({ userEmail: { '$in': combinedEmails } }, { userEmail: 1, subscribers: 1 });
 
+    const requestorUser = allUsers.filter(i => i.userEmail === requestor);
+    const targetUser = allUsers.filter(i => i.userEmail === target);
+
+    if (!requestorUser.length) {
+        helper.throwNotFoundError('requestor');
+    }
+    if (!targetUser.length) {
+        helper.throwNotFoundError('target');
+    }
+
+    const result = await Friends
+        .update({ userEmail: target }, { subscribers: _.uniq([..._.get(targetUser, 'subscribers', []), requestor]) });
+
+    return result;
+}
+
+const block = async(requestor, target) => {
+    const combinedEmails = [requestor, target];
+    helper.validateEmails(combinedEmails);
+    const allUsers = await Friends.find({ userEmail: { '$in': combinedEmails } }, { userEmail: 1, blocked: 1 });
+    console.log('block>>>>', requestor, target)
+    const requestorUser = allUsers.filter(i => i.userEmail === requestor);
+    const targetUser = allUsers.filter(i => i.userEmail === target);
+    console.log('block 1>>>>', requestor, target)
+    if (!requestorUser.length) {
+        helper.throwNotFoundError('requestor');
+    }
+    if (!targetUser.length) {
+        helper.throwNotFoundError('target');
+    }
+
+    console.log('block2>>>>', requestor, target)
+    const result = await Friends
+        .update({ _id: requestorUser[0]._id }, { blocked: _.uniq([..._.get(requestorUser, '0.blocked', []), target]) });
+
+    return result;
+}
 
 module.exports = {
     add,
     addFriends,
     getAllFriends,
     getCommonFriends,
+    subscribe,
+    block
 }

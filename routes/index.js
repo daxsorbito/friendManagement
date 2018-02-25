@@ -18,7 +18,6 @@ module.exports = (server) => {
         }
         next();
     });
-
     server.get('/friends/:email', async(req, res, next) => {
         try {
             const email = _.get(req, ['params', 'email'], '');
@@ -43,5 +42,35 @@ module.exports = (server) => {
         }
         next();
     });
-
+    server.post('/friends/subscribe', async(req, res, next) => {
+        try {
+            if (!req.is('application/json')) {
+                res.send(new error.InvalidContentError({}, `Expects 'application/json'`));
+                return next();
+            }
+            const requestor = _.get(req, ['body', 'requestor'], '');
+            const target = _.get(req, ['body', 'target'], '');
+            const result = await Friends.subscribe(requestor, target);
+            res.send({ success: true })
+        } catch (e) {
+            utils.restifyErrorWrapper(res, e);
+        }
+        next();
+    });
+    server.post('/friends/block', async(req, res, next) => {
+        try {
+            if (!req.is('application/json')) {
+                res.send(new error.InvalidContentError({}, `Expects 'application/json'`));
+                return next();
+            }
+            const requestor = _.get(req, ['body', 'requestor'], '');
+            const target = _.get(req, ['body', 'target'], '');
+            console.log('api block>>>', requestor, target)
+            const result = await Friends.block(requestor, target);
+            res.send({ success: true })
+        } catch (e) {
+            utils.restifyErrorWrapper(res, e);
+        }
+        next();
+    });
 }

@@ -86,5 +86,75 @@ describe('routes test', () => {
         });
     });
 
+    describe('POST# /friends/subscribe', () => {
+        it('should pass if both requestor and target are valid', async() => {
+            await request(server)
+                .post('/friends').send({ friends: ['test1@test.com', 'test2@test.com', 'test3@test.com'] });
+
+            const result = await request(server)
+                .post('/friends/subscribe')
+                .send({ requestor: 'test2@test.com', target: 'test1@test.com' });
+
+            expect(result.body).toMatchSnapshot();
+        });
+
+        it('should not pass if requestor is not found', async() => {
+            await request(server)
+                .post('/friends').send({ friends: ['test1@test.com', 'test2@test.com', 'test3@test.com'] });
+
+            const result = await request(server)
+                .post('/friends/subscribe')
+                .send({ requestor: 'NOTFOUND@test.com', target: 'test1@test.com' });
+
+            expect(result.body).toMatchSnapshot();
+        });
+
+        it('should not pass if target is not found', async() => {
+            await request(server)
+                .post('/friends').send({ friends: ['test1@test.com', 'test2@test.com', 'test3@test.com'] });
+
+            const result = await request(server)
+                .post('/friends/subscribe')
+                .send({ requestor: 'test1@test.com', target: 'NOTFOUND@test.com' });
+
+            expect(result.body).toMatchSnapshot();
+        });
+    });
+
+    describe('POST# /friends/block', () => {
+        it('should pass if both requestor and target are valid', async() => {
+            await request(server)
+                .post('/friends').send({ friends: ['test1@test.com', 'test2@test.com', 'test3@test.com'] });
+
+            const result = await request(server)
+                .post('/friends/block')
+                .send({ requestor: 'test2@test.com', target: 'test1@test.com' });
+
+            expect(result.body).toMatchSnapshot();
+        });
+
+        it('should not pass if requestor is not found', async() => {
+            await request(server)
+                .post('/friends').send({ friends: ['test1@test.com', 'test2@test.com', 'test3@test.com'] });
+
+            const result = await request(server)
+                .post('/friends/block')
+                .send({ requestor: 'NOTFOUND@test.com', target: 'test1@test.com' });
+
+            expect(result.body).toMatchSnapshot();
+        });
+
+        it('should not pass if target is not found', async() => {
+            await request(server)
+                .post('/friends').send({ friends: ['test1@test.com', 'test2@test.com', 'test3@test.com'] });
+
+            const result = await request(server)
+                .post('/friends/block')
+                .send({ requestor: 'test1@test.com', target: 'NOTFOUND@test.com' });
+
+            expect(result.body).toMatchSnapshot();
+        });
+    });
+
 
 });

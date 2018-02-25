@@ -133,4 +133,81 @@ describe('Friends model test', () => {
         });
     });
 
+    describe('subscribe# method tests', () => {
+        it('should be able to set the subcription', async() => {
+            expect.assertions(2);
+            await Friends.add('test1@test.com');
+            await Friends.add('test2@test.com');
+
+            const results = await Friends.subscribe('test2@test.com', 'test1@test.com');
+
+            expect(results).toMatchSnapshot();
+
+            const target = await mongoose.models.Friends.find({ userEmail: 'test1@test.com' },
+                selectProjection);
+
+            expect(target).toMatchSnapshot();
+        });
+
+        it('should throw an exception if requestor is not found', async() => {
+            expect.assertions(1);
+            await Friends.add('test1@test.com');
+
+            try {
+                await Friends.subscribe('NOTFOUND@test.com', 'test1@test.com');
+            } catch (e) {
+                expect(e.message).toEqual('Resource not found. --requestor');
+            }
+        });
+        it('should throw an exception if target is not found', async() => {
+            expect.assertions(1);
+            await Friends.add('test1@test.com');
+
+            try {
+                await Friends.subscribe('test1@test.com', 'NOTFOUND@test.com');
+            } catch (e) {
+                expect(e.message).toEqual('Resource not found. --target');
+            }
+        });
+    });
+
+    describe('block# method tests', () => {
+        it('should be able to set the subcription', async() => {
+            expect.assertions(2);
+            await Friends.add('test1@test.com');
+            await Friends.add('test2@test.com');
+
+            const results = await Friends.block('test1@test.com', 'test2@test.com');
+
+            expect(results).toMatchSnapshot();
+
+            const target = await mongoose.models.Friends.find({ userEmail: 'test1@test.com' },
+                selectProjection);
+
+            expect(target).toMatchSnapshot();
+        });
+
+        it('should throw an exception if requestor is not found', async() => {
+            expect.assertions(1);
+            await Friends.add('test1@test.com');
+
+            try {
+                await Friends.block('NOTFOUND@test.com', 'test1@test.com');
+            } catch (e) {
+                expect(e.message).toEqual('Resource not found. --requestor');
+            }
+        });
+        it('should throw an exception if target is not found', async() => {
+            expect.assertions(1);
+            await Friends.add('test1@test.com');
+
+            try {
+                await Friends.block('test1@test.com', 'NOTFOUND@test.com');
+            } catch (e) {
+                expect(e.message).toEqual('Resource not found. --target');
+            }
+        });
+    });
+
+
 })

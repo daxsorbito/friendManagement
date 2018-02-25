@@ -51,6 +51,26 @@ Object {
 }
 `;
 
+exports[`routes test POST# /friends/block should not pass if requestor is not found 1`] = `
+Object {
+  "code": "ResourceNotFound",
+  "message": "Resource not found. --requestor",
+}
+`;
+
+exports[`routes test POST# /friends/block should not pass if target is not found 1`] = `
+Object {
+  "code": "ResourceNotFound",
+  "message": "Resource not found. --target",
+}
+`;
+
+exports[`routes test POST# /friends/block should pass if both requestor and target are valid 1`] = `
+Object {
+  "success": true,
+}
+`;
+
 exports[`routes test POST# /friends/common should pass if both has common friends 1`] = `
 Object {
   "count": 1,
@@ -65,6 +85,26 @@ exports[`routes test POST# /friends/common should pass if there are no common fr
 Object {
   "count": 0,
   "friends": Array [],
+  "success": true,
+}
+`;
+
+exports[`routes test POST# /friends/subscribe should not pass if requestor is not found 1`] = `
+Object {
+  "code": "ResourceNotFound",
+  "message": "Resource not found. --requestor",
+}
+`;
+
+exports[`routes test POST# /friends/subscribe should not pass if target is not found 1`] = `
+Object {
+  "code": "ResourceNotFound",
+  "message": "Resource not found. --target",
+}
+`;
+
+exports[`routes test POST# /friends/subscribe should pass if both requestor and target are valid 1`] = `
+Object {
   "success": true,
 }
 `;

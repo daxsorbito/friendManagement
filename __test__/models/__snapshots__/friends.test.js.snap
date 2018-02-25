@@ -33,6 +33,27 @@ Array [
 ]
 `;
 
+exports[`Friends model test block# method tests should be able to set the subcription 1`] = `
+Object {
+  "n": 1,
+  "nModified": 1,
+  "ok": 1,
+}
+`;
+
+exports[`Friends model test block# method tests should be able to set the subcription 2`] = `
+Array [
+  Object {
+    "blocked": Array [
+      "test2@test.com",
+    ],
+    "friends": Array [],
+    "subscribers": Array [],
+    "userEmail": "test1@test.com",
+  },
+]
+`;
+
 exports[`Friends model test getAllFriends# method tests should be able to retrive friends 1`] = `
 Array [
   "test2@test.com",
@@ -61,3 +82,24 @@ Array [
 `;
 
 exports[`Friends model test getCommonFriends# method tests should be not be able to retrieve common friends 1`] = `Array []`;
+
+exports[`Friends model test subscribe# method tests should be able to set the subcription 1`] = `
+Object {
+  "n": 1,
+  "nModified": 1,
+  "ok": 1,
+}
+`;
+
+exports[`Friends model test subscribe# method tests should be able to set the subcription 2`] = `
+Array [
+  Object {
+    "blocked": Array [],
+    "friends": Array [],
+    "subscribers": Array [
+      "test2@test.com",
+    ],
+    "userEmail": "test1@test.com",
+  },
+]
+`;
