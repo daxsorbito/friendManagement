@@ -37,5 +37,54 @@ describe('routes test', () => {
         });
     });
 
+    describe('GET# /friends/:email', () => {
+        it('should pass if email is found', async() => {
+            await request(server)
+                .post('/friends').send({ friends: ['test1@test.com', 'test2@test.com'] });
+
+            const result = await request(server).get('/friends/test1@test.com');
+
+            expect(result.body).toMatchSnapshot();
+        });
+
+        it('should fail if email is invalid', async() => {
+            const result = await request(server).get('/friends/INVALID_EMAIL');
+
+            expect(result.statusCode).toEqual(400);
+            expect(result.body).toMatchSnapshot();
+        });
+
+        it('should fail if email is not found', async() => {
+            const result = await request(server).get('/friends/test1@test.com');
+
+            expect(result.statusCode).toEqual(404);
+            expect(result.body).toMatchSnapshot();
+        });
+    });
+
+    describe('POST# /friends/common', () => {
+        it('should pass if both has common friends', async() => {
+            await request(server)
+                .post('/friends').send({ friends: ['test1@test.com', 'test2@test.com', 'test3@test.com'] });
+
+            const result = await request(server)
+                .post('/friends/common')
+                .send({ friends: ['test1@test.com', 'test3@test.com'] });
+
+            expect(result.body).toMatchSnapshot();
+        });
+
+        it('should pass if there are no common friends', async() => {
+            await request(server)
+                .post('/friends').send({ friends: ['test1@test.com', 'test2@test.com', 'test3@test.com'] });
+
+            const result = await request(server)
+                .post('/friends/common')
+                .send({ friends: ['test1@test.com', 'test5@test.com'] });
+
+            expect(result.body).toMatchSnapshot();
+        });
+    });
+
 
 });

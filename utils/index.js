@@ -42,10 +42,16 @@ const restifyErrorWrapper = (res, e) => {
     }
 }
 
+const throwNotFoundError = (field) => {
+    throw new error
+        .ResourceNotFoundError(`Resource not found.${field ? ' --' + field : ''}`);
+}
+
 module.exports = {
     validateEmails,
     validateEmail,
     isEmailValid,
-    restifyErrorWrapper
+    restifyErrorWrapper,
+    throwNotFoundError
 
 }

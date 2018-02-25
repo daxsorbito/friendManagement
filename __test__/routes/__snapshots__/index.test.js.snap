@@ -1,5 +1,29 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`routes test GET# /friends/:email should fail if email is invalid 1`] = `
+Object {
+  "code": "BadRequest",
+  "message": "Unexpected error.; caused by Error: Invalid email address.",
+}
+`;
+
+exports[`routes test GET# /friends/:email should fail if email is not found 1`] = `
+Object {
+  "code": "ResourceNotFound",
+  "message": "Resource not found.",
+}
+`;
+
+exports[`routes test GET# /friends/:email should pass if email is found 1`] = `
+Object {
+  "count": 1,
+  "friends": Array [
+    "test2@test.com",
+  ],
+  "success": true,
+}
+`;
+
 exports[`routes test POST# /friends should fail if content type is not json 1`] = `
 Object {
   "code": "InvalidContent",
@@ -23,6 +47,24 @@ Object {
 
 exports[`routes test POST# /friends should pass if correct data is passed 1`] = `
 Object {
+  "success": true,
+}
+`;
+
+exports[`routes test POST# /friends/common should pass if both has common friends 1`] = `
+Object {
+  "count": 1,
+  "friends": Array [
+    "test2@test.com",
+  ],
+  "success": true,
+}
+`;
+
+exports[`routes test POST# /friends/common should pass if there are no common friends 1`] = `
+Object {
+  "count": 0,
+  "friends": Array [],
   "success": true,
 }
 `;

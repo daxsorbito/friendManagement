@@ -28,8 +28,29 @@ const addFriends = async(emails) => {
     return results;
 }
 
+const getAllFriends = async(email) => {
+    helper.validateEmail(email);
+    const result = await Friends.findOne({ userEmail: email }, { friends: 1, _id: 0 });
+    if (!result) {
+        helper.throwNotFoundError();
+    }
+    return result.friends;
+}
+
+const getCommonFriends = async(emails) => {
+    helper.validateEmails(emails);
+    const results = await Friends.find({ userEmail: { '$in': emails } }, { friends: 1, _id: 0 });
+    if (results.length !== emails.length) {
+        return [];
+    }
+    return _.intersection(...results.map(i => _.get(i, 'friends', [])));
+}
+
+
 
 module.exports = {
     add,
     addFriends,
+    getAllFriends,
+    getCommonFriends,
 }

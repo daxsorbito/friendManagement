@@ -19,4 +19,29 @@ module.exports = (server) => {
         next();
     });
 
+    server.get('/friends/:email', async(req, res, next) => {
+        try {
+            const email = _.get(req, ['params', 'email'], '');
+            const result = await Friends.getAllFriends(email);
+            res.send({ success: true, friends: result, count: result.length })
+        } catch (e) {
+            utils.restifyErrorWrapper(res, e);
+        }
+        next();
+    });
+    server.post('/friends/common', async(req, res, next) => {
+        try {
+            if (!req.is('application/json')) {
+                res.send(new error.InvalidContentError({}, `Expects 'application/json'`));
+                return next();
+            }
+            const friends = _.get(req, ['body', 'friends'], []);
+            const result = await Friends.getCommonFriends(friends);
+            res.send({ success: true, friends: result, count: result.length })
+        } catch (e) {
+            utils.restifyErrorWrapper(res, e);
+        }
+        next();
+    });
+
 }

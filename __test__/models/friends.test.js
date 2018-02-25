@@ -81,4 +81,56 @@ describe('Friends model test', () => {
             }
         });
     });
+
+    describe('getAllFriends# method tests', () => {
+        it('should be able to retrive friends', async() => {
+            expect.assertions(3);
+            await Friends.add('test1@test.com', { friends: ['test2@test.com', 'test3@test.com'] });
+            const friends = ['test1@test.com', 'test2@test.com', 'test3@test.com'];
+
+            await Friends.addFriends(friends);
+            for (let email of friends) {
+                expect(await Friends.getAllFriends(email)).toMatchSnapshot();
+            }
+        });
+
+        it('should throw an exception if email is invalid', async() => {
+            expect.assertions(1);
+            try {
+                await Friends.getAllFriends('INVALID_EMAIL');
+            } catch (e) {
+                expect(e.message).toEqual('Invalid email address.');
+            }
+        });
+
+        it('should throw an exception if email is not found', async() => {
+            expect.assertions(1);
+            try {
+                await Friends.getAllFriends('test1@test.com');
+            } catch (e) {
+                expect(e.message).toEqual('Resource not found.');
+            }
+        });
+    });
+
+    describe('getCommonFriends# method tests', () => {
+        it('should be able to retrieve common friends', async() => {
+            const friendEmails = ['test1@test.com', 'test2@test.com', 'test3@test.com'];
+            await Friends.addFriends(friendEmails);
+
+            const results = await Friends.getCommonFriends(['test1@test.com', 'test3@test.com']);
+
+            expect(results).toMatchSnapshot();
+        });
+
+        it('should be not be able to retrieve common friends', async() => {
+            const friendEmails = ['test1@test.com', 'test2@test.com', 'test3@test.com'];
+            await Friends.addFriends(friendEmails);
+
+            const results = await Friends.getCommonFriends(['test1@test.com', 'test5@test.com']);
+
+            expect(results).toMatchSnapshot();
+        });
+    });
+
 })

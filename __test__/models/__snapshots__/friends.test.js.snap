@@ -32,3 +32,32 @@ Array [
   },
 ]
 `;
+
+exports[`Friends model test getAllFriends# method tests should be able to retrive friends 1`] = `
+Array [
+  "test2@test.com",
+  "test3@test.com",
+]
+`;
+
+exports[`Friends model test getAllFriends# method tests should be able to retrive friends 2`] = `
+Array [
+  "test1@test.com",
+  "test3@test.com",
+]
+`;
+
+exports[`Friends model test getAllFriends# method tests should be able to retrive friends 3`] = `
+Array [
+  "test1@test.com",
+  "test2@test.com",
+]
+`;
+
+exports[`Friends model test getCommonFriends# method tests should be able to retrieve common friends 1`] = `
+Array [
+  "test2@test.com",
+]
+`;
+
+exports[`Friends model test getCommonFriends# method tests should be not be able to retrieve common friends 1`] = `Array []`;
