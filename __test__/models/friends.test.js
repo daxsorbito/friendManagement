@@ -21,12 +21,8 @@ describe('Friends model test', () => {
         } catch (e) {
             console.log(e);
         }
-
     });
 
-    beforeEach(async() => {
-        await mongoose.models.Friends.remove(); // remove this later
-    });
     afterEach(async() => {
         await mongoose.models.Friends.remove();
     });
@@ -210,7 +206,7 @@ describe('Friends model test', () => {
     });
 
     describe('getListOfFriendsToBeNotified# method tests', () => {
-        describe('user not blocked', () => {
+        describe('not blocked', () => {
             it('should a able to return list with friend connections', async() => {
                 expect.assertions(1);
                 await Friends.add('test1@test.com', { friends: ['connectedFriend@test.com'] });
@@ -240,7 +236,7 @@ describe('Friends model test', () => {
             });
         });
 
-        describe('blocked user', () => {
+        describe('blocked', () => {
             it('should a able to return list with friend connections', async() => {
                 expect.assertions(1);
                 const testEmail = 'connected_friend@test.com';

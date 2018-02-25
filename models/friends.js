@@ -71,10 +71,8 @@ const block = async(requestor, target) => {
     const combinedEmails = [requestor, target];
     helper.validateEmails(combinedEmails);
     const allUsers = await Friends.find({ userEmail: { '$in': combinedEmails } }, { userEmail: 1, blocked: 1 });
-    console.log('block>>>>', requestor, target)
     const requestorUser = allUsers.filter(i => i.userEmail === requestor);
     const targetUser = allUsers.filter(i => i.userEmail === target);
-    console.log('block 1>>>>', requestor, target)
     if (!requestorUser.length) {
         helper.throwNotFoundError('requestor');
     }
@@ -82,7 +80,6 @@ const block = async(requestor, target) => {
         helper.throwNotFoundError('target');
     }
 
-    console.log('block2>>>>', requestor, target)
     const result = await Friends
         .update({ _id: requestorUser[0]._id }, { blocked: _.uniq([..._.get(requestorUser, '0.blocked', []), target]) });
 
@@ -91,9 +88,7 @@ const block = async(requestor, target) => {
 
 const getListOfFriendsToBeNotified = async(email, msg) => {
     helper.validateEmail(email);
-    console.log('params>>>', email, msg);
     const mentions = helper.extractEmailMentions(msg || '') || [];
-    console.log('mentions>>>', mentions);
     const requestorData = await Friends.findOne({ userEmail: email }, { userEmail: 1, subscribers: 1, friends: 1, blocked: 1 });
 
     const blocked = _.get(requestorData, 'blocked', []);
@@ -104,11 +99,7 @@ const getListOfFriendsToBeNotified = async(email, msg) => {
     ]);
 
     const result = tentativeRecipients.filter(i => blocked.indexOf(i) === -1);
-
-    console.log('>>>>>', tentativeRecipients, blocked, mentions, requestorData, result);
     return result;
-
-
 }
 
 module.exports = {

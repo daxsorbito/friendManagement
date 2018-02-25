@@ -65,7 +65,6 @@ module.exports = (server) => {
             }
             const requestor = _.get(req, ['body', 'requestor'], '');
             const target = _.get(req, ['body', 'target'], '');
-            console.log('api block>>>', requestor, target)
             const result = await Friends.block(requestor, target);
             res.send({ success: true })
         } catch (e) {
