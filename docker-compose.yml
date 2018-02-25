@@ -1,0 +1,21 @@
+version: "3"
+services:
+    api:
+        build: .
+        container_name: api
+        restart: always
+        env_file: .env
+        environment:
+            MONGODB_URI: ${MONGODB_URI}
+        ports: 
+            - 4000:8080
+        volumes:
+            - .:/usr/src/api
+    mongo:
+        container_name: mongo
+        image: mongo
+        volumes:
+            - ./data:/data/db
+        ports:
+            - 27017:27017
+
