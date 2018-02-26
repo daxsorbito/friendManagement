@@ -32,3 +32,98 @@ or
 npm run test
 ```
 - Note: if you have a different mongodb uri set to connect to, change the URI in the ./script/jestTestSetup.js file
+
+#Using the app
+Postman could be used to try to test the application
+
+Below are the exposed routes of the api
+1. POST /friends
+  - input example
+  ```json
+  {
+    "friends": ["test1@test.com", "test2@test.com"]
+  }
+  ```
+  - output
+  ```json
+  {
+    "success": true
+  }
+  ```
+2. GET /friends/:email
+ - url example
+  ```json
+  http://localhost:4000/friens/test1@test.com
+  ```
+  - output
+  ```json
+ {
+    "success": true,
+    "friends": [
+        "test2@ttest.com"
+    ],
+    "count": 1
+}
+  ```
+
+3. POST /friends/common
+ ```json
+  {
+    "friends": ["test1@test.com", "test2@test.com"]
+  }
+  ```
+  - output
+  ```json
+  {
+    "count": 1,
+    "friends": [
+      "test3@test.com",
+    ],
+    "success": true,
+  }
+  ```
+
+4. POST /friends/subscribe
+```json
+  {
+    "requestor": "test1@test.com", 
+    "target": "test2@test.com"
+  }
+  ```
+  - output
+  ```json
+  {
+    "success": true,
+  }
+  ```
+
+5. POST /friends/block
+```json
+  {
+    "requestor": "test1@test.com", 
+    "target": "test2@test.com"
+  }
+  ```
+  - output
+  ```json
+  {
+    "success": true,
+  }
+  ```
+6. POST /friend/post
+```json
+  {
+    "sender": "test1@test.com", 
+    "text": "Hello World! test2@test.com"
+  }
+  ```
+  - output
+  ```json
+  {
+  "recipients": Array [
+    "test2@test.com",
+    "test3@test.com"
+  ],
+  "success": true,
+}
+  ```
