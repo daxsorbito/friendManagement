@@ -33,7 +33,7 @@ npm run test
 ```
 - Note: if you have a different mongodb uri set to connect to, change the URI in the ./script/jestTestSetup.js file
 
-#Using the app
+# Using the app
 Postman could be used to try to test the application
 
 Below are the exposed routes of the api
@@ -53,7 +53,7 @@ Below are the exposed routes of the api
 2. GET /friends/:email
  - url example
   ```json
-  http://localhost:4000/friens/test1@test.com
+  http://localhost:4000/friends/test1@test.com
   ```
   - output
   ```json
@@ -79,7 +79,7 @@ Below are the exposed routes of the api
     "friends": [
       "test3@test.com",
     ],
-    "success": true,
+    "success": true
   }
   ```
 
@@ -93,7 +93,7 @@ Below are the exposed routes of the api
   - output
   ```json
   {
-    "success": true,
+    "success": true
   }
   ```
 
@@ -107,7 +107,7 @@ Below are the exposed routes of the api
   - output
   ```json
   {
-    "success": true,
+    "success": true
   }
   ```
 6. POST /friend/post
@@ -124,6 +124,6 @@ Below are the exposed routes of the api
     "test2@test.com",
     "test3@test.com"
   ],
-  "success": true,
+  "success": true
 }
   ```
