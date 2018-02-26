@@ -120,7 +120,7 @@ Below are the exposed routes of the api
   - output
   ```json
   {
-  "recipients": Array [
+  "recipients": [
     "test2@test.com",
     "test3@test.com"
   ],
