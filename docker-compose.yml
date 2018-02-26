@@ -11,6 +11,8 @@ services:
             - 4000:8080
         volumes:
             - .:/usr/src/api
+        depends_on:
+            - mongo
     mongo:
         container_name: mongo
         image: mongo
