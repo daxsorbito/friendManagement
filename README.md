@@ -1,7 +1,7 @@
 # Technology used
 1. restify - web service framework optimized for building rest api. Optimized for introspection and performance.
 2. docker/docker-compose - for easier creation, deployment and running applications
-3. mongoose - common ORM for mongodb
+3. mongoose - MongoDB object modeling tool designed to work in an asynchronous environment
 4. mongodb - non-sql, schema-less document oriented storage.
 5. jest 
 6. superagent
@@ -15,15 +15,15 @@ $ docker-compose up
 - Note: if you have some port conflict, you could change the docker-compose.yaml port to a new a port
 
 # Running the test
-1. running mongodb, make sure you have a running mongodb in your local and it accessible using this URI
+1. running mongodb, make sure you have a running mongodb in your local and it is accessible using this URI
 ```javascript
 process.env.MONGODB_URI = 'mongodb://127.0.0.1:27017/test';
 ```
-- if you don't have you could run this instead
+- if you don't have you, could run this instead
 ```bash
 $ docker-compose up mongo
 ```
-2. then, run the test
+2. then, run the test (on a separate terminal)
 ```bash
 $ yarn test
 ```
@@ -31,10 +31,10 @@ or
 ```bash
 npm run test
 ```
-- Note: if you have a different mongodb uri set to connect to, change the URI in the ./script/jestTestSetup.js file
+- Note: if you have a different mongodb uri set to connect to, change the URI in the ./script/jestTestSetup.js file before running the test
 
 # Using the app
-Postman could be used to try to test the application
+Postman could be used to try the application
 
 Below are the exposed routes of the api
 1. POST /friends
