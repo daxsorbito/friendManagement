@@ -4,7 +4,7 @@
 3. mongoose - MongoDB object modeling tool designed to work in an asynchronous environment.
 4. mongodb - non-sql, schema-less document oriented storage.
 5. jest 
-6. superagent
+6. supertest
 
 # Running the app
 1. open a new terminal and run the code below
@@ -29,7 +29,7 @@ $ yarn test
 ```
 or
 ```bash
-npm run test
+$ npm run test
 ```
 - Note: if you have a different mongodb uri to connect to, change the URI in the ./script/jestTestSetup.js file before running the test
 
