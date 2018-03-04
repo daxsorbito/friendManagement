@@ -14,7 +14,8 @@
     },
     "homepage": "https://github.com/daxsorbito/friendManagement#readme",
     "scripts": {
-        "start": "nodemon index.js --exec babel-node",
+        "start:dev": "nodemon index.js --exec babel-node",
+        "start": "babel-node index.js",
         "test": "jest --forceExit"
     },
     "devDependencies": {

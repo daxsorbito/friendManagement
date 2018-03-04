@@ -26,7 +26,7 @@ db.on('error', err => {
 db.on('open', () => {
     if (process.env.NODE_ENV !== 'test') {
         server.listen(config.port, () => {
-            console.log('Mongodb URI: ' + process.env.MONGODB_URI)
+            console.log('Mongodb URI: ', process.env.MONGODB_URI || config.db.uri)
             console.log('%s listening at %s', server.name, server.url);
         });
     }
